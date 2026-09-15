@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Employee } from '../employee';
 import { EmployeeService } from '../employee-service';
 
@@ -10,16 +10,28 @@ import { EmployeeService } from '../employee-service';
 })
 export class EmployeeList {
   employees: Employee[] = [];
+  errorMessage = '';
 
-  constructor(private employeeService: EmployeeService){}
+  constructor(
+    private employeeService: EmployeeService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.getEmployees();
   }
 
   private getEmployees(){
-    this.employeeService.getEmployeesList().subscribe(data => {
-      this.employees = data;
-    })
+    this.employeeService.getEmployeesList().subscribe({
+      next: data => {
+        console.log('Employees loaded', data);
+        this.employees = data;
+        this.changeDetectorRef.markForCheck();
+      },
+      error: error => {
+        console.error('Failed to load employees', error);
+        this.errorMessage = 'Não foi possível carregar os funcionários.';
+      }
+    });
   }
 }
