@@ -7,5 +7,7 @@ import com.rsolucoes.angularspring.dto.EmployeeDto;
 public interface EmployeeService {
 	
 	List<EmployeeDto> getAllEmployees();
+	
+	EmployeeDto createEmployee(EmployeeDto employeeDto);
 
 }
