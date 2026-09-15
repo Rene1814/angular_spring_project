@@ -1,19 +1,25 @@
 import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
 import { Employee } from '../employee';
+import { EmployeeService } from '../employee-service';
 
 @Component({
-  imports: [NgFor],
+  imports: [],
   selector: 'app-employee-list',
   styleUrl: './employee-list.css',
   templateUrl: './employee-list.html',
 })
 export class EmployeeList {
   employees: Employee[] = [];
+
+  constructor(private employeeService: EmployeeService){}
+
   ngOnInit(): void {
-    this.employees = [
-      { id: 1, firstName: 'John', lastName: 'Doe', emailId: 'john.doe@example.com' },
-      { id: 2, firstName: 'Jane', lastName: 'Smith', emailId: 'jane.smith@example.com' },
-    ];
+    this.getEmployees();
+  }
+
+  private getEmployees(){
+    this.employeeService.getEmployeesList().subscribe(data => {
+      this.employees = data;
+    })
   }
 }

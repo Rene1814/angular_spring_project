@@ -8,10 +8,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let employee of employees">
+    @for (employee of employees; track employee.id) {
+    <tr>
       <td>{{ employee.firstName }}</td>
       <td>{{ employee.lastName }}</td>
-      <td>{{ employee.emailId }}</td>
+      <td>{{ employee.email }}</td>
     </tr>
+    }
   </tbody>
 </table>
