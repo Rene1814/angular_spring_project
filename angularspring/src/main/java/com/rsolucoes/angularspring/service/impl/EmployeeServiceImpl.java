@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.rsolucoes.angularspring.dto.EmployeeDto;
+import com.rsolucoes.angularspring.exception.ResourceNotFoundException;
 import com.rsolucoes.angularspring.mapper.EmployeeMapper;
 import com.rsolucoes.angularspring.model.Employee;
 import com.rsolucoes.angularspring.repository.EmployeeRepository;
@@ -37,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public EmployeeDto getEmployeeById(Long id) {
 		Employee employee = employeeRepository.findById(id)
-				.orElseThrow();
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 		return EmployeeMapper.mapToEmployeeDto(employee);
 	}
 
