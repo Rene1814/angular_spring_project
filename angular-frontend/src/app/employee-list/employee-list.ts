@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Employee } from '../employee';
 import { EmployeeService } from '../employee-service';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [],
@@ -14,7 +15,8 @@ export class EmployeeList {
 
   constructor(
     private employeeService: EmployeeService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,5 +35,9 @@ export class EmployeeList {
         this.errorMessage = 'Não foi possível carregar os funcionários.';
       }
     });
+  }
+
+  updateEmployee(id?: number){
+    this.router.navigate(['update-employee', id]);
   }
 }
